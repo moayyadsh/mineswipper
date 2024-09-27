@@ -1,3 +1,20 @@
+@mixin BorderTopLeft ($px){
+    border-bottom:  $px solid #1e262e;
+    border-right:  $px solid #1e262e;
+    border-top: $px solid #788088 ;
+    border-left: $px solid #788088 ;
+
+} 
+
+@mixin BorderBottomRight ($px){
+    border-bottom:  $px solid #788088;
+        border-right:  $px solid #788088;
+        border-top: $px solid #1e262e ;
+        border-left: $px solid #1e262e ;
+
+} 
+
+
 .minesweeper{
     width: 800px;
     height: 500px;
@@ -8,10 +25,7 @@
   
     &::before{
         content: "";
-        border-bottom: 5px solid #1e262e;
-        border-right: 5px solid #1e262e;
-        border-top:5px solid #788088 ;
-        border-left:5px solid #788088 ;
+     @include BorderTopLeft(5px);
         border-radius: 3px;
         display: block; 
         position: absolute;
@@ -30,10 +44,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 5px solid #788088;
-        border-right: 5px solid #788088;
-        border-top:5px solid #1e262e ;
-        border-left:5px solid #1e262e ;
+      @include BorderBottomRight(5px);
         border-radius: 3px;
         margin-bottom: 10px;
  
@@ -43,17 +54,11 @@
         }
         .cell_counter{
             width: 80px;
-            border-bottom: 3px solid #788088;
-            border-right: 3px solid #788088;
-            border-top:3px solid #1e262e ;
-            border-left:3px solid #1e262e ;
+            @include BorderBottomRight(3px);
         }
         .emoji{
             width: 50px;
-            border-bottom: 4px solid #1e262e;
-            border-right: 4px solid #1e262e;
-            border-top:4px solid #788088 ;
-            border-left:4px solid #788088 ;
+            @include BorderTopLeft(4px);
             background: #464e56;
             position: relative;
             &::after{
@@ -71,10 +76,7 @@
         }
         .timer{
             width: 80px;
-            border-bottom: 3px solid #788088;
-            border-right: 3px solid #788088;
-            border-top:3px solid #1e262e ;
-            border-left:3px solid #1e262e ;
+            @include BorderBottomRight(3px);
         }
 
     }
@@ -82,10 +84,7 @@
         width: 780px;
         height: 400px;
         // background: red;
-        border-bottom: 5px solid #788088;
-        border-right: 5px solid #788088;
-        border-top:5px solid #1e262e ;
-        border-left:5px solid #1e262e ;
+        @include BorderBottomRight(5px);
         border-radius: 3px;
         z-index: 999;
        
@@ -93,10 +92,7 @@
                 height: 24.4px;
                 width: 24px;
                 background: var(--bg2) ;
-                border-bottom: 3.5px solid #1e262e;
-                border-right: 3.5px solid #1e262e;
-                border-top:3.5px solid #707880 ;
-                border-left:3.5px solid #707880 ;
+                @include BorderTopLeft(3.5px);
                 &.cell:hover{
                     background: red;
           

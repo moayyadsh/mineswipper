@@ -1,65 +1,16 @@
 import React from 'react'
+import { Game } from '../Class/Game';
+import { Cell } from '../Class/Cell';
 
 function Minesweeper() {
 
-    class Game {
-        private board = [[]] as any
 
-           constructor(x :number, y:number){
-            this.board = new Board(x , y)
-            
-           }
-            public getCells(){
-                return this.board.getCells()
-            }
-    }
-    class Board {
 
-        private cells: Cell[][] = [];
-        private mine: number = 0;
-
-        constructor (row: number, column: number){
-              this.cells = this.createBoard(row,column)
-        }
-        private createBoard(row: number, column: number) : any {
-            const rowArray : any = []
-            for (let x = 0; x < row; x++) {
-                const columnArray :any = []
-                for (let y = 0; y < column; y++) {
-                    const cell = new Cell(x,y);                    
-                    columnArray.push(cell)
-                }
-                rowArray.push(columnArray)
-                
-            }
-            return  rowArray
-            
-        }
-        private addRandomMinesToBoard(){
-        }
-        private revelCell(){
-        }
-        public getCells (){
-            return this.cells
-        }
-    }
-    class Cell {
-        private x : number ;
-        private y : number ;
-       private type : number | "mine" = 0;
-       private isOpen: boolean = false ;
-       private isFlage: boolean = false;
-
-       constructor ( x : number,y :number){
-        this.x = x;
-        this.y = y;
-       }
-
-    }
-
-    const game = new Game(5,5);
+    const game = new Game(20);
     const board = game.getCells()
-    console.log(board);
+    const BoardWidth = game.getBoardWidth()
+    const WidthPlusBorder = BoardWidth + 10;
+    console.log(game.getaddRandomMinesToBoard());
     
     return (
         <div className='minesweeper'>
@@ -68,10 +19,20 @@ function Minesweeper() {
                 <div className='emoji'></div>
                 <div className='timer'></div>
             </header>
-            <main className='cells_border'>
-                {board.map((item: any) => {                    
-                    return item?.map((cellItem:any)=>{
-                        return <div key={cellItem} className='cell'></div>
+            <main className='cells_border' style={{width:WidthPlusBorder,height:WidthPlusBorder}}>
+                {board.map((item: Cell[][]) => {
+                    console.log(item);
+                    
+                    return item?.map((cellItem: any) => {
+                        console.log(cellItem.type);
+                        
+                        if(cellItem.type === "mine"){
+                            return <div className='revel_cell mine_cell'></div>
+                        }
+                        else{
+                            return <div key={cellItem} className='cell'></div>}
+                        
+                       
                     })
                 })}
             </main>

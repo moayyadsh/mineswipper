@@ -1,4 +1,3 @@
-import React from 'react'
 import { Game } from '../Class/Game';
 import { Cell } from '../Class/Cell';
 
@@ -10,8 +9,6 @@ function Minesweeper() {
     const board = game.getCells()
     const BoardWidth = game.getBoardWidth()
     const WidthPlusBorder = BoardWidth + 10;
-    console.log(game.getaddRandomMinesToBoard());
-    
     return (
         <div className='minesweeper'>
             <header>
@@ -21,16 +18,16 @@ function Minesweeper() {
             </header>
             <main className='cells_border' style={{width:WidthPlusBorder,height:WidthPlusBorder}}>
                 {board.map((item: Cell[][]) => {
-                    console.log(item);
                     
-                    return item?.map((cellItem: any) => {
-                        console.log(cellItem.type);
+                    return item?.map((cellItem: any,index:number) => {
+                        console.log(cellItem)
                         
                         if(cellItem.type === "mine"){
-                            return <div className='revel_cell mine_cell'></div>
+                            return <div key={index} className='cell revel_cell mine_cell'></div>
                         }
                         else{
-                            return <div key={cellItem} className='cell'></div>}
+                            return <div key={index}  className='cell'></div>
+                        }
                         
                        
                     })

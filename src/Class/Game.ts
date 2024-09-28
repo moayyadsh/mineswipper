@@ -5,7 +5,7 @@ export class Game {
 
     constructor(size: number) {
         this.board = new Board(size)
-
+        this.getAddRandomMinesToBoard()
     }
     public getCells() {
         return this.board.getCells()
@@ -13,7 +13,7 @@ export class Game {
     public getBoardWidth(){
         return this.board.calcBoardWidth()
     }
-    public getaddRandomMinesToBoard(){
+    public getAddRandomMinesToBoard(){
         return this.board.addRandomMinesToBoard()
     }
 }

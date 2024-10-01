@@ -9,12 +9,21 @@ export  class Cell {
         this.x = x;
         this.y = y;
         this.type = type
-
+        
     }
     public getType(){
         return this.type
     }
+public getIsOpen(){
+    return this.isOpen
+}
+    public openCell(){
+       
+    return this.isOpen = true
+    console.log(this.isOpen);
+      
+    }
+    
 
-     
-
+    
 }

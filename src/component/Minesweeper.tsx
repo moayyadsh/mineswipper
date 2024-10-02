@@ -12,7 +12,7 @@ function Minesweeper() {
 
     const test = new Board(5)
     // test.handleCellClick(1,1)
-    console.log(test.handleCellClick(1,1));
+    console.log(test.calcMineNumber(3,2));
     
 
 

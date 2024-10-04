@@ -16,4 +16,5 @@ export class Game {
     public getAddRandomMinesToBoard(){
         return this.board.addRandomMinesToBoard()
     }
+        
 }

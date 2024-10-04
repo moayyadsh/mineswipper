@@ -14,16 +14,24 @@ export  class Cell {
     public getType(){
         return this.type
     }
+    public isMine (){
+        return this.getType() === "mine"
+    }
 public getIsOpen(){
     return this.isOpen
 }
     public openCell(){
        
-    return this.isOpen = true
-    console.log(this.isOpen);
+    this.isOpen = true
       
     }
     
+    public getX(){
+        return this.x
+    }
+    public getY(){
+        return this.y
+    }
 
     
 }

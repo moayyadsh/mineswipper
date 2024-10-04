@@ -6,9 +6,11 @@ export class Board {
     private mineNumber: number = 15;
     private cellWidth: number = 24;
     private size: number;
+    private revelBoard:any;
     constructor(size: number) {
         this.cells = this.createBoard(size);
         this.size = size;
+        // this.revelBoard = this.revelCell
 
     }
 
@@ -46,18 +48,13 @@ export class Board {
         }
 
     }
-    public handleCellClick(x: number, y: number) {
-        const cell = this.cells[x][y];
-    
+    public revelCell(cell:Cell) {    
         
-        if (!cell.getIsOpen()) {
-           
+        if (!cell.getIsOpen()) {           
             cell.openCell();
-            console.log(  cell.openCell());
-            
-            console.log(`Cell opened.`);
             if (cell.getType() === "mine") {
-                    console.log(" Game Over.");
+                console.log("game over");
+                return this.revelAllCells();
                 } 
 
         } else {
@@ -88,8 +85,19 @@ export class Board {
         }
 
     }
-    public revelCell() {
+    public revelAllCells() {
+        const newCells = [...this.cells];
+         console.log(newCells);
+        return newCells.map((item:Cell[])=>{
+            console.log(item);
+            return item?.map((item:Cell)=>{
+                console.log(item);
+                item.openCell()
+                return item ; 
 
+            })
+         })
+         
     }
     public getCells() {
         return this.cells

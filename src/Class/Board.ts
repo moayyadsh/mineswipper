@@ -67,38 +67,24 @@ export class Board {
    
     public calcMineNumber(x:number , y:number){
         let cellNumber = 0;
+        const cell = this.cells[x][y] ;
         console.log(cellNumber);
+        const nearCells = [  ]
 
-        if(this.cells[x][y+1].getType() =="mine" ){
-            cellNumber++
-            console.log(cellNumber);
-            if(this.cells[x][y-1].getType() =="mine" ){
+        for (let i = -1; i <= 1; i++) {
+           for (let j = -1; j <= 1; j++) {
+          const  newCellx = x + i
+          const  newCelly = y + j
+            if(newCellx > this.size    ){
+                console.log("out of board");
+                
+            }else if(this.cells[newCellx][newCelly].getType() == "mine"   ){
                 cellNumber++
-                if(this.cells[x+1][y].getType() =="mine" ){
-                    cellNumber++
-                    if(this.cells[x-1][y].getType() =="mine" ){
-                        cellNumber++
-                        if(this.cells[x+1][y+1].getType() =="mine" ){
-                            cellNumber++
-                            if(this.cells[x-1][y-1].getType() =="mine" ){
-                                cellNumber++
-                                if(this.cells[x+1][y-1].getType() =="mine" ){
-                                    cellNumber++
-                                    if(this.cells[x-1][y+1].getType() =="mine" ){
-                                        cellNumber++
-                                    }
-                                }
-                            }
-                        }
-                    }                  
-                }
+
             }
-        console.log(cellNumber);
 
-              
-        }else{
-        console.log("no mine");
-
+            
+           }      
         }
 
     }
@@ -111,6 +97,9 @@ export class Board {
     public calcBoardWidth() {
 
         return (this.size * this.cellWidth);
+    }
+    public openZeroCells(){
+        
     }
 }
 

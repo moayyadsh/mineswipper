@@ -3,18 +3,18 @@ import { Cell } from "./Cell";
 export class Board {
 
     private cells: Cell[][] = [];
-    private mineNumber: number = 15;
+    private mineNumber: number = 40;
     private cellWidth: number = 24;
     private size: number;
-    private revelBoard:any;
     constructor(size: number) {
-        this.cells = this.createBoard(size);
         this.size = size;
-        // this.revelBoard = this.revelCell
+        this.cells = this.createBoard(size);
+        this.addRandomMinesToBoard();
+        this.calcAllCellsMineNumber()
 
     }
 
-     private createBoard(size: number): any {
+    private createBoard(size: number): any {
         const rowArray: any = []
         for (let x = 0; x < size; x++) {
             const columnArray: any = []
@@ -27,12 +27,13 @@ export class Board {
         }
         return rowArray
 
+
+
     }
 
     private addRandomMinesToBoard() {
 
         let leftMines = this.mineNumber;
-        console.log(leftMines);
 
         while (leftMines > 0) {
             const randomX = Math.floor(Math.random() * this.size);
@@ -48,57 +49,85 @@ export class Board {
         }
 
     }
-    public revelCell(cell:Cell) {    
-        
-        if (!cell.getIsOpen()) {           
-            cell.openCell();
+    public revelAllCells() {
+        const newCells = [...this.cells];
+        return newCells.map((item: Cell[]) => {
+            return item?.map((item: Cell) => {
+                item.openCell();
+                console.log(item);
+
+                return item;
+
+            })
+        })
+
+
+
+    }
+    public revelCell(cell: Cell) {
+
+        if (!cell.getIsOpen()) {
+            console.log(cell);
+            
             if (cell.getType() === "mine") {
+                console.log(cell);
+                
                 console.log("game over");
-                return this.revelAllCells();
-                } 
+                this.revelAllCells();
+                return;
+            }
+            cell.openCell();
+
+            if (cell.isEmpty()) {
+                console.log(cell);
+                 this.openZeroCells(cell)
+            }
 
         } else {
             console.log(`Cell is already open.`);
         }
     }
-   
-    public calcMineNumber(x:number , y:number){
-        let cellNumber = 0;
-        const cell = this.cells[x][y] ;
-        console.log(cellNumber);
-        const nearCells = [  ]
 
+    public calcMineNumber(cell: Cell) {
+        let cellNumber = 0;
+        const x = cell.getX();
+        const y = cell.getY()
+        const isMine = cell.isMine()
         for (let i = -1; i <= 1; i++) {
-           for (let j = -1; j <= 1; j++) {
-          const  newCellx = x + i
-          const  newCelly = y + j
-            if(newCellx > this.size    ){
-                console.log("out of board");
-                
-            }else if(this.cells[newCellx][newCelly].getType() == "mine"   ){
-                cellNumber++
+            for (let j = -1; j <= 1; j++) {
+                const newCellx = x + i
+                const newCelly = y + j
+                if (isMine) {
+                    return;
+                } else if (newCellx > this.size - 1 || newCelly > this.size - 1 || newCellx < 0 || newCelly < 0) {
+
+
+                } else {
+                    const newCell = this.cells[newCellx][newCelly]
+                    const isMine = newCell.getType() === "mine";
+                    if (isMine) {
+                        cellNumber++
+                    }
+                }
+
+                cell.setmineNumber(cellNumber)
+
 
             }
-
-            
-           }      
         }
 
     }
-    public revelAllCells() {
-        const newCells = [...this.cells];
-         console.log(newCells);
-        return newCells.map((item:Cell[])=>{
-            console.log(item);
-            return item?.map((item:Cell)=>{
-                console.log(item);
-                item.openCell()
-                return item ; 
 
+    public calcAllCellsMineNumber() {
+        this.cells.map((item: Cell[]) => {
+            item?.map((item: Cell) => {
+
+                this.calcMineNumber(item)
             })
-         })
-         
+        })
     }
+
+
     public getCells() {
         return this.cells
     }
@@ -106,68 +135,42 @@ export class Board {
 
         return (this.size * this.cellWidth);
     }
-    public openZeroCells(){
-        
+    public openZeroCells(cell: Cell) {
+        const x = cell.getX();
+        const y = cell.getY()
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const newCellx = x + i;
+                const newCelly = y + j;
+                const outOfBoard = newCellx > this.size - 1 || newCelly > this.size - 1 || newCellx < 0 || newCelly < 0 || (newCellx === x && newCelly === y);
+
+                if (outOfBoard) {
+                    
+                    
+                }
+                else if(!outOfBoard){
+
+                    const newcell = this.cells[newCellx][newCelly]
+                    console.log(newcell);
+                    
+                    const isMine = newcell.isMine()
+                    if (isMine) {
+                        console.log(newcell);
+                        return;
+                    }
+    
+                    else {
+                        
+                        this.revelCell(newcell)
+
+                    }
+                }
+
+
+
+
+            }
+        }
+
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// public calcMineNumber(x: number, y: number) {
-//     let cellNumber = 0;
-//     console.log(cellNumber);
-
-//     // Define the relative positions of the adjacent cells
-//     const directions = [
-//         [-1, -1], [-1, 0], [-1, 1], // Top-left, Top, Top-right
-//         [0, -1],          [0, 1],   // Left,       , Right
-//         [1, -1], [1, 0], [1, 1]     // Bottom-left, Bottom, Bottom-right
-//     ];
-
-//     // Iterate through each direction to check for mines
-//     for (const [dx, dy] of directions) {
-//         const newX = x + dx;
-//         const newY = y + dy;
-
-//         // Check if the new coordinates are within bounds
-//         if (this.isValidCell(newX, newY) && this.cells[newX][newY].getType() === "mine") {
-//             cellNumber++;
-//         }
-//     }
-
-//     console.log(cellNumber);
-// }
-
-// // Helper function to check if the cell is within bounds
-// private isValidCell(x: number, y: number): boolean {
-//     return x >= 0 && x < this.cells.length && y >= 0 && y < this.cells[0].length;
-// }

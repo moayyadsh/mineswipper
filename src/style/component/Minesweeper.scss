@@ -96,6 +96,8 @@
                 font-family: "Bungee", sans-serif;
                 font-weight: 400;
                 font-style: normal;
+                text-align: center;
+                font-size: 13px;
                 &:hover{
                     scale: 1.1;
                     cursor: pointer;
@@ -123,10 +125,37 @@
     
                 
               }
-            .number_tow{
+            .number_1{
                 color: #66c266;
             }
         
+            .number_2{
+                color:  red;
+            }
+
+            .number_3{
+                color: yellow;
+            }
+            .number_4{
+                color: white;
+            }
+            .number_5{
+                color: #788088;
+            }
+            .number_6{
+                color: aqua;
+            }
+            .number_7{
+                color: orange;
+            }
+            .number_8{
+                color: blue;
+            }
+            .number_9{
+                color: blueviolet;
+            }
+
+
 
     }
     main{
